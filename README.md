@@ -35,7 +35,7 @@ La première programmation de l'ESP32 devra être réalisé par USB, les mises �
 
 ## Câblage
 
-Le câblage de l'ESP32 ves la board RS232 est assez simple, 4 fils à raccorder comme suit:
+Le câblage de l'ESP32 vers la board RS232 est assez simple, 4 fils à raccorder comme suit:
 
 | ESP32 |     | MAX3232 |
 | :---- | :-: | ------: |
@@ -47,7 +47,17 @@ Le câblage de l'ESP32 ves la board RS232 est assez simple, 4 fils à raccorder 
 Côté borne, on récupére l'alimentation 230V sur le bornier du bas le plus à gauche pour y connecter l'alimentation 5V.
 On raccorde ensuite le câble RS232 croisé sur le connecteur SUBD en haut à droite.
 
+Si vous voulez connaitre le courant de charge réel envoyé au véhicule, il faudra y raccoder un tore et le monter sur le fil de phase qui part au VE. 
+Voir la documentation de la borne: [Documentation WB-01](./docs/wallbox_WB-01_V15A.pdf)
+
 ![alim](./Images/cablage.jpg)
+
+## Intégration dans la borne
+
+Voici mon installation provisoire, j'ai prévu de mettre l'ESP32 et la board RS232 sur un support en impression 3D que je ferais plus tard.
+Sur la photo, on voit l'alimentation de la raspberry qui a été ouverte pour y souder les 2 fils 230V.
+
+![integration](./Images/integration.jpg)
 
 ## Change log
 
