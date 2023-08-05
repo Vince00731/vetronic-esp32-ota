@@ -111,6 +111,87 @@ La commande ***help*** vous donnera toutes les commandes disponible sur la borne
 
 ![reponse_help](./Images/reponse_help.png)
 
+### Interrogation par requête HTTP avec retour XML
+
+Pour interroger la borne et obtenir un retour en XML, il suffit d'envoyer une requête sur le port 9200 en ajoutant la commande. 
+http://192.168.0.63:9200/commande
+
+Si vous ne spécifiez pas de commande, alors le module effectuera les 2 commandes evse_state et $GG*B2 automatiquement et retournera le résultat en une seule requête. C'est la requête qui va être utilisé par Jeedom pour récupérer l'état complète de la borne. 
+
+Exemple pour la commande ***help*** : http://192.168.0.63:9200/help
+Vous obtenez alors la réponse XML suivante:
+
+![reponse_help_xml](./Images/reponse_help_xml.png)
+
+Le XML possède les TAGs suivants:
+
+***- error*** qui peut prendre les valeurs suivantes: 
+- 200 = Pas d'erreur, réponse correcte à la requête
+- 444 = Pas de réponse de la borne (Timeout COM RS232)
+- 400 = Si la borne ne répond pas correctement à la requête
+
+***- req*** qui contient la commande demandée.
+
+***- reponse_brute*** qui contient la réponse brute de la borne sans aucun traitement.
+
+***- message*** qui contient un message d'information du traitement fait par le module ESP32.
+
+***- status*** qui contient le status de la borne au format numérique:
+- Nan = Si la requête ne correspond pas à une demande de status
+- 0 = Câble déconnecté
+- 1 = Câble connecté
+- 2 = Véhicule en charge
+
+***- status*** qui contient le status de la borne au format numérique:
+- 0 = Câble déconnecté
+- 1 = Câble connecté
+- 2 = Véhicule en charge
+
+***- status_txt*** qui retourne le status de la borne au format texte.
+
+***- courant_charge*** qui correspond au courant lu par le tore en **mA**.
+
+***- tension*** qui correspond à la tension appliquée sur la prise du véhicule en Volts.
+
+***- courant_maximal*** qui correspond à la limitation du courant de charge en **mA** que la borne applique. Lu à 0 si le véhicule n'est pas connecté.
+
+Si la requête demandée à la borne ne permet pas de récupérer le status, la tension ou les courants, alors les valeurs seront à NaN.
+
+## Configuration dans Jeedom
+
+1. Il vous faut installer le plugin [Script](https://market.jeedom.com/index.php?v=d&p=market_display&id=20) depuis le market Jeedom et l'activer.
+2. Créer un équipement et le configurer avec une Auto-actualisation à la minute et un délai d'actualisation à 5 sec.
+![jeedom1](./Images/jeedom1.png)
+3. Créer les commandes avec les réglages suivants:
+- Type script = XML
+- Requête = le nom du TAG XML
+- Paramètres = l'adresse IP du module ESP32 sur le port 9200 avec la commande de la borne si besoin
+- Timeout à 5sec
+- Nombre d'essais à 2
+
+Voici un exemple de commande Jeedom:
+
+![jeedom2](./Images/jeedom2.png)
+
+Ne pas oublier que la borne retourne les courants en mA, il vous faut les convertir en A depuis l'onglet de configuration de la commande:
+
+![jeedom_mA](./Images/jeedom_mA.png)
+
+Pour obtenir le widget suivant:
+
+![jeedom3](./Images/jeedom3.png)
+
+## FAQ
+**- Comment stopper la charge du VE ?**
+	ll suffit d'envoyer un courant de limitation inférieure ou égale à 5A avec la commande $SC. Exemple: $SC 0 (pour 0A)
+	
+**- Comment démarrer la charge du VE ?**
+	Il suffit d'envoyer un courant de limitation supérieure à 5A avec la commande $SC. Exemple: $SC 25 (pour 25A)
+	A noter qu'envoyer la valeur -1 permet à la borne de sélectionner la limitation réglée depuis le menu paramètre de la borne.
+	
+**- Quelle est la limite de courant minimum ?**
+	Pour le moment, la limite minimum est à 6A, en dessous la borne coupe la charge.
+
 ## Change log
 
 ### [v1.0] 5 août 2023
