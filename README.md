@@ -3,6 +3,9 @@
 
 [![GitHub release](https://img.shields.io/github/v/release/Vince00731/vetronic-esp32-ota)](https://github.com/Vince00731/vetronic-esp32-ota/releases)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/PageBuilder.svg?)](https://www.ardu-badge.com/PageBuilder)
+[![Arduino Library Manager](https://img.shields.io/static/v1?label=Arduino&message=v6.21.3&logo=arduino&logoColor=white&color=blue)](https://www.ardu-badge.com/ArduinoJson/6.21.3)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
 [![License](https://img.shields.io/github/license/Vince00731/vetronic-esp32-ota)](https://github.com/Vince00731/vetronic-esp32-ota/blob/master/LICENSE)
 
 Permet le contrôle à distance de la borne de recharge [VE-TRONIC WB-01](http://ve-tronic.fr/store/wallbox) par [Jeedom](https://www.jeedom.com) (ou tout autre domotique) via un ESP32.
@@ -91,6 +94,22 @@ Une fois que le module ESP32 est programmé et configuré une première fois, vo
 4. A la fin de l'update, patienter jusqu'au rechargement de la page web.
 
 ![update](./Images/portail_update.png)
+
+## Utilisation 
+
+Il y a 2 façons d'utiliser ce module: 
+- la première est par la page web de l'ESP32
+- la seconde est par requêtte HTTP à l'adresse du module, sur le port 9200, qui retourne un XML. 
+
+La page Web a été conçu pour du test manuel et pour voir ce que répond la borne, toutefois, elle peut être utilisé pour configurer la borne.
+La requête HTTP avec retour XML est destiné à la connection avec Jeedom ou autre logiciel de domotique prenant en charge le XML.
+
+### Interrogation de la borne par la page Web
+
+Depuis la page Home accessible à l'adresse IP du module ESP32, il suffit de saisir la commande et de cliquer sur ***Envoi***.
+La commande ***help*** vous donnera toutes les commandes disponible sur la borne.
+
+![reponse_help](./Images/reponse_help.png)
 
 ## Change log
 
