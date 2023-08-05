@@ -59,6 +59,39 @@ Sur la photo, on voit l'alimentation de la raspberry qui a été ouverte pour y 
 
 ![integration](./Images/integration.jpg)
 
+## Installation du programme dans l'ESP32
+
+1. Installer [l'IDE Arduino](https://www.arduino.cc/en/software) 
+2. Dans le gestionnaire de carte, rechercher et installer les cartes [esp32 par Espressif Systems](https://github.com/espressif/arduino-esp32 "esp32 par Espressif Systems")
+3. Dans le gestionnaire de librairie, rechercher et installer les librairies suivantes:
+	- [PageBuilder](https://github.com/Hieromon/PageBuilder "PageBuilder")
+	- [ArduinoJson](https://github.com/bblanchon/ArduinoJson "ArduinoJson")
+	- [AutoConnect](https://github.com/Hieromon/AutoConnect "AutoConnect")
+4. Redémarrer l'IDE Arduino après avoir installé les packages
+5. Charger le projet VETRONIC_ESP32_OTA.ino
+6. Sélectionner la carte "ESP32-WROOM-DA" ou autre en fonction de votre module ESP32
+7. Raccorder votre ESP32 à votre ordinateur et installer les drivers USB / RS232 correspondant
+8. Dans l'IDE Arduino, sélectionner le port COM correspondant à l'ESP32
+9. Compiler puis téléverser le code dans l'ESP32
+
+## 1er démarrage du module ESP32
+
+Au 1er démarrage, le module ESP32 va démarrer en point d'accès WiFi.
+1. Rechercher et connectez vous au WiFi: ***VETRONIC_ESP32_OTA***, le mot de passe est ***12345678***
+2. Normalement votre smartphone ou tablette devrait vous demander de vous connecter à la page du serveur, si ce n'est pas le cas, connectez vous à l'adresse IP suivante: ***172.0.0.1***
+3. Cliquer sur ***Configure new AP*** et sélectionner votre borne WiFi.
+4. Le module redémarre et bascule sur le WiFi que vous avez configuré, il vous faudra alors récupérer son adresse IP dans votre routeur ou votre box internet. Je vous conseille de le mettre en IP fixe pour ne pas à reconfigurer Jeedom en permanence.
+
+## Mise à jour du firmware du module ESP32
+
+Une fois que le module ESP32 est programmé et configuré une première fois, vous pouvez mettre à jour le firmware depuis la page web du module.
+1. Connecter vous au module, l'adresse IP dans mon exemple est http://192.168.0.63, elle sera différente chez vous !
+2. Sélectionner le fichier .bin se trouvant dans le répertoire Firmware_ESP32 de se dépot. 
+3. Cliquer sur Update
+4. A la fin de l'update, patienter jusqu'au rechargement de la page web.
+
+![update](./Images/portail_update.png)
+
 ## Change log
 
 ### [v1.0] 5 août 2023
