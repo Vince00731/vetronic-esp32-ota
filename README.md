@@ -23,15 +23,31 @@ La première programmation de l'ESP32 devra être réalisé par USB, les mises �
 
 - [ESP32 NodeMCU](https://www.amazon.fr/dp/B071P98VTG) (ou un de ses nombreux clones)
 
-![NodeMCU](./Images/nodemcu.jpg "NodeMCU")
+![NodeMCU](./Images/nodemcu.jpg)
 
 - [Une Board MAX3232](https://www.amazon.fr/gp/product/B07ZDK4BLH)
 
-![Board RS232](./Images/board_rs232.jpg "Board RS232")
+![Board RS232](./Images/board_rs232.jpg)
 - [Une alimentation 230V vers 5V](https://www.amazon.fr/dp/B00WKKG7CI), j'ai utilisé un bloc secteur de raspberry que j'avais en stock.
 
-![alim](./Images/alim.jpg "alim")
-- [un Câble RS232 mâle / mâle croisé](https://www.amazon.fr/dp/B08LPT8RMF?th=1) pour ma part je l'ai fabriqué en achetant 2 prises RS232 mâle et du câble électrique pour le faire à la bonne longueur. 
+![alim](./Images/alim.jpg)
+- [un Câble SUBD 9 points mâle / mâle croisé](https://www.amazon.fr/dp/B08LPT8RMF?th=1) pour ma part je l'ai fabriqué en achetant 2 prises SUBD 9 points mâle et du câble électrique pour le faire à la bonne longueur. 
+
+## Câblage
+
+Le câblage de l'ESP32 ves la board RS232 est assez simple, 4 fils à raccorder comme suit:
+
+| ESP32 |     | MAX3232 |
+| :---- | :-: | ------: |
+| 3V3  | ->  |     VCC |
+| GND     | ->  |     GND |
+| D15    | ->  |      RX |
+| D4    | ->  |      TX |
+
+Côté borne, on récupére l'alimentation 230V sur le bornier du bas le plus à gauche pour y connecter l'alimentation 5V.
+On raccorde ensuite le câble RS232 croisé sur le connecteur SUBD en haut à droite.
+
+![alim](./Images/cablage.jpg)
 
 ## Change log
 
