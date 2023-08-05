@@ -22,8 +22,15 @@ La première programmation de l'ESP32 devra être réalisé par USB, les mises �
 ## Materiels
 
 - [ESP32 NodeMCU](https://www.amazon.fr/dp/B071P98VTG) (ou un de ses nombreux clones)
+
 ![NodeMCU](./Images/nodemcu.jpg "NodeMCU")
+
 - [Une Board MAX3232](https://www.amazon.fr/gp/product/B07ZDK4BLH)
+
+![Board RS232](./Images/board_rs232.jpg "Board RS232")
+- [Une alimentation 230V vers 5V](https://www.amazon.fr/dp/B00WKKG7CI), j'ai utilisé un bloc secteur de raspberry que j'avais en stock.
+
+![alim](./Images/alim.jpg "alim")
 - [un Câble RS232 mâle / mâle croisé](https://www.amazon.fr/dp/B08LPT8RMF?th=1) pour ma part je l'ai fabriqué en achetant 2 prises RS232 mâle et du câble électrique pour le faire à la bonne longueur. 
 
 ## Change log
