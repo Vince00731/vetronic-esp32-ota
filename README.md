@@ -1,5 +1,4 @@
-
-# VETRONIC ESP32 OTA
+IC ESP32 OTA
 
 [![GitHub release](https://img.shields.io/github/v/release/Vince00731/vetronic-esp32-ota)](https://github.com/Vince00731/vetronic-esp32-ota/releases)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
@@ -138,11 +137,6 @@ Le XML possède les TAGs suivants:
 
 ***- status*** qui contient le status de la borne au format numérique:
 - Nan = Si la requête ne correspond pas à une demande de status
-- 0 = Câble déconnecté
-- 1 = Câble connecté
-- 2 = Véhicule en charge
-
-***- status*** qui contient le status de la borne au format numérique:
 - 0 = Câble déconnecté
 - 1 = Câble connecté
 - 2 = Véhicule en charge
