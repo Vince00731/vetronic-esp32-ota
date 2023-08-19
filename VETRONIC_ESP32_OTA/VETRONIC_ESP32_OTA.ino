@@ -178,9 +178,9 @@ void loop() {
 
       // Sinon on fait une lecture classique
       } else {
-        str_com = Read_Evse(str);
-        step_tcp = ENVOI_REQ;
+        str_com = Read_Evse(str);        
       }
+      step_tcp = ENVOI_REQ;
       break;
 
     ////////////////
