@@ -191,6 +191,9 @@ Pour obtenir le widget suivant:
 ### [v1.0] 5 août 2023
 - Première version
 
+### [v1.1] 19 août 2023
+- Correction d'un break manquant dans le traitement d'une requête TCP.
+
 
 ## License
 
