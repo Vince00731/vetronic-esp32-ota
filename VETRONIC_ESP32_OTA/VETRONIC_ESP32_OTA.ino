@@ -12,7 +12,7 @@
 //
 // Auteur: Vincent ROBERT avec l'aide de Christian Dingean (cdlog2@hotmail.com)
 // vrelectronique@gmail.com
-// Version 1.0 du 04/08/2023
+// Version 1.1 du 19/08/2023
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "config.h"
@@ -181,7 +181,7 @@ void loop() {
         str_com = Read_Evse(str);
         step_tcp = ENVOI_REQ;
       }
-
+      break;
 
     ////////////////
     case ENVOI_REQ:
