@@ -152,7 +152,7 @@ Le XML possède les TAGs suivants:
 
 Si la requête demandée à la borne ne permet pas de récupérer le status, la tension ou les courants, alors les valeurs seront à NaN.
 
-## Configuration dans Jeedom
+## Version V1.x: Configuration de Jeedom par script lancé régulièrement
 
 1. Il vous faut installer le plugin [Script](https://market.jeedom.com/index.php?v=d&p=market_display&id=20) depuis le market Jeedom et l'activer.
 2. Créer un équipement et le configurer avec une Auto-actualisation à la minute et un délai d'actualisation à 5 sec.
@@ -175,6 +175,28 @@ Ne pas oublier que la borne retourne les courants en mA, il vous faut les conver
 Pour obtenir le widget suivant:
 
 ![jeedom3](./Images/jeedom3.png)
+
+## A partir de V2.0: Configuration dans Jeedom pour mise à jour automatique des commandes infos
+
+A partir de la version V2.0, un nouveau menu "Jeedom" est disponible pour renseigner les paramètres de connexion à Jeedom. Une fois renseigné, le module enverra automatiquement les mises à jours des infos à Jeedom quand elles changeront. 
+Plus besoin de faire du polling avec le plugin Script.
+L'envoi des commandes reste identique, j'ai mis à disposition un script php à mettre dans un bloc CODE d'un scénario pour envoyer la commande de réglage du courant qui est la seule nécessaire pour activer/couper la charge et régler le courant max.
+1. Créer un virtuel avec les commandes que vous voulez récupérer, voici la liste disponible:
+ - Status au format code numérique
+ - Status au format Texte
+ - Tension en volts
+ - Courant consommé en mA (attention à convertir dans Jeedom)
+ - Courant max en mA (attention à convertir dans Jeedom)
+2. Configurer le module depuis le menu "Jeedom" accessible depuis la page Web du module
+   - Renseigner l'adresse IP (IP locale uniquement)
+   - Renseigner la clé API de votre Jeedom
+   - Renseigner les numéros des commandes Jeedom. Mettre à 0 pour désactiver
+   - Renseigner la fréquence de rafraichissement en msec de lecture de la borne. (0 pour désactiver et 2000 minimum) Jeedom ne recevra les données que si il y a un changement de valeur ou au démarrage du module.
+  
+![config_jeedom](./Images/config_jeedom.png)
+
+4. Créer un scénario avec un bloc CODE, dans ce bloc coller le script fourni : [Script PHP Jeedom](./Script%20Jeedom/code_scenario.php) 
+5. Créer une commande dans votre virtuel qui lance ce scénario avec le TAG "courant", mettre la valeur du courant correspondant à ce que vous voulez faire.
 
 ## FAQ
 **- Comment stopper la charge du VE ?**
