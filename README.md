@@ -14,6 +14,7 @@ Permet le contrôle à distance de la borne de recharge [VE-TRONIC WB-01](http:/
 Ce projet permet de communiquer en RS232 avec la borne VE-TRONIC par l'intermédiaire d'une requête HTTP. 
 La commande à envoyer à la borne est intégrée à la requête HTTP et l'ESP32 retourne un résultat en XML que Jeedom (ou autre logiciel de domotique) pourra facilement interpréter. 
 Côté Jeedom, il faut juste utiliser le plugin [Script](https://market.jeedom.com/index.php?v=d&p=market_display&id=20) et d'utiliser le parser XML intégré pour récupérer les valeurs. Pour envoyer une commande à la borne, le même plugin permet d'envoyer une requête HTTP simplement.
+
 [UPDATE] A partir de la version V2.0, le module peut mettre à jour automatiquement les commandes Infos de Jeedom par requête URL HTTP. Pour celà, il faudra configurer l'adresse IP et la clé API de Jeedom ainsi que les ID des commandes. Il n'est donc plus nécessaire de passer par le plugin script pour faire une interrogation périodique.
 
 Pour faciliter la configuration et la maintenance logicielle du module ESP32, un serveur Web est intégré ainsi que le manager WiFi [AutoConnect](https://github.com/Hieromon/AutoConnect) permettant la configuration du WiFi mais également la mise à jour du firmware de l'ESP32 par OTA.
