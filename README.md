@@ -195,9 +195,10 @@ Pour obtenir le widget suivant:
 - Correction d'un break manquant dans le traitement d'une requête TCP.
 
 ### [v2.0] 27 août 2023
-- Ajout des requêtes par HTTP pour la mise à jour de Jeedom automatiquement. Plus besoin de faire du polling
-- Ajout d'un menu "Jeedom" pour configurer les paramètres de connexions et les ID des commandes
-- Lecture périodique de l'état de la borne (fréquence réglable)
+- Suppression du JSON pour décrire les pages Web, passage en AutoConnect Element natif (plus léger).
+- Ajout des requêtes par URL HTTP pour la mise à jour de Jeedom automatiquement. Plus besoin de faire du polling.
+- Ajout d'un menu "Jeedom" pour configurer les paramètres de connexions (IP, clé API) et les ID des commandes
+- Lecture périodique de l'état de la borne (fréquence réglable) et envoi automatique à Jeedom si changement.
 
 
 ## License
