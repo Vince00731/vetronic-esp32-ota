@@ -224,6 +224,12 @@ L'envoi des commandes reste identique, j'ai mis à disposition un script php à 
 - Ajout d'un menu "Jeedom" pour configurer les paramètres de connexions (IP, clé API) et les ID des commandes
 - Lecture périodique de l'état de la borne (fréquence réglable) et envoi automatique à Jeedom si changement.
 
+### [v2.2] 07 mai 2024
+- Reconnexion automatique au point d'accès WiFi en cas de coupure d'électricité ou de redémarrage du WiFi
+- Corection d'un bug sur l'envoi de requête URL HTTP (manque la fermeture du server)
+- Ajout de la fonction RTC locale avec mise à jour automatique de la date et heure et du changement d'heure
+- Commande de l'écran de la borne qui affiche maintenant la tension, le courant de charge (si tore installé) et la limite de courant pendant la charge.
+
 
 ## License
 
