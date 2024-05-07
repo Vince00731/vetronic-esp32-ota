@@ -227,9 +227,10 @@ L'envoi des commandes reste identique, j'ai mis à disposition un script php à 
 
 ### [v2.2] 07 mai 2024
 - Reconnexion automatique au point d'accès WiFi en cas de coupure d'électricité ou de redémarrage du WiFi
+- Ajout de la possibilité de supprimer un point d'accès WiFi enregistré
 - Correction d'un bug sur l'envoi de requête URL HTTP (manque la fermeture du server)
 - Filtrage des valeurs parasites de tension et de courant envoyé à Jeedom.
-- Ajout de la fonction RTC locale avec mise à jour automatique de la date et heure et du changement d'heure
+- Ajout de la fonction RTC locale avec mise à jour automatique de la date/heure et du changement d'heure l'été et l'hiver
 - Commande de l'écran de la borne qui affiche maintenant la tension, le courant de charge (si tore installé) et la limite de courant pendant la charge.
 
 
