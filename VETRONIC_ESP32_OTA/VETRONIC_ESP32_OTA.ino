@@ -192,13 +192,13 @@ void setup()
   httpClient.setConnectTimeout(500);
 
   // Intitialisation des variables globales
-  evse_state.code_status = 0;
+  evse_state.code_status = 13;
   strncpy(evse_state.txt_status, "Démarrage...", sizeof(evse_state_t::txt_status) - 1);
   evse_state.courant = 0;
   evse_state.courant_max = 0;
   evse_state.tension = 0;
 
-  previous_evse_state.code_status = 0;
+  previous_evse_state.code_status = 13;
   strncpy(previous_evse_state.txt_status, "Démarrage...", sizeof(evse_state_t::txt_status) - 1);
   previous_evse_state.courant = 0;
   previous_evse_state.courant_max = 0;
