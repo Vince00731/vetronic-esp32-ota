@@ -4,8 +4,9 @@ IC ESP32 OTA
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/PageBuilder.svg?)](https://www.ardu-badge.com/PageBuilder)
 [![Arduino Library Manager](https://img.shields.io/static/v1?label=Arduino&message=v6.21.3&logo=arduino&logoColor=white&color=blue)](https://www.ardu-badge.com/ArduinoJson/6.21.3)
-[![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/ESP32Time.svg?)](https://www.ardu-badge.com/ESP32Time)
 [![License](https://img.shields.io/github/license/Vince00731/vetronic-esp32-ota)](https://github.com/Vince00731/vetronic-esp32-ota/blob/master/LICENSE)
+
 
 Permet le contrôle à distance de la borne de recharge [VE-TRONIC WB-01](http://ve-tronic.fr/store/wallbox) par [Jeedom](https://www.jeedom.com) (ou tout autre domotique) via un ESP32.
 
@@ -223,6 +224,14 @@ L'envoi des commandes reste identique, j'ai mis à disposition un script php à 
 - Ajout des requêtes par URL HTTP pour la mise à jour de Jeedom automatiquement. Plus besoin de faire du polling.
 - Ajout d'un menu "Jeedom" pour configurer les paramètres de connexions (IP, clé API) et les ID des commandes
 - Lecture périodique de l'état de la borne (fréquence réglable) et envoi automatique à Jeedom si changement.
+
+### [v2.2] 07 mai 2024
+- Reconnexion automatique au point d'accès WiFi en cas de coupure d'électricité ou de redémarrage du WiFi
+- Ajout de la possibilité de supprimer un point d'accès WiFi enregistré
+- Correction d'un bug sur l'envoi de requête URL HTTP (manque la fermeture du server)
+- Filtrage des valeurs parasites de tension et de courant envoyé à Jeedom.
+- Ajout de la fonction RTC locale avec mise à jour automatique de la date/heure et du changement d'heure l'été et l'hiver
+- Commande de l'écran de la borne qui affiche maintenant la tension, le courant de charge (si tore installé) et la limite de courant pendant la charge.
 
 
 ## License
