@@ -189,6 +189,9 @@ L'envoi des commandes reste identique, j'ai mis à disposition un script php à 
  - Tension en volts
  - Courant consommé en mA (attention à convertir dans Jeedom)
  - Courant max en mA (attention à convertir dans Jeedom)
+
+![Exemple de virtuel](./Images/jeedom4.png)
+   
 2. Configurer le module depuis le menu "Jeedom" accessible depuis la page Web du module
    - Renseigner l'adresse IP (IP locale uniquement)
    - Renseigner la clé API de votre Jeedom
@@ -197,8 +200,18 @@ L'envoi des commandes reste identique, j'ai mis à disposition un script php à 
   
 ![config_jeedom](./Images/config_jeedom.png)
 
-4. Créer un scénario avec un bloc CODE, dans ce bloc coller le script fourni : [Script PHP Jeedom](./Script%20Jeedom/code_scenario.php) 
-5. Créer une commande dans votre virtuel qui lance ce scénario avec le TAG "courant", mettre la valeur du courant correspondant à ce que vous voulez faire.
+4. Créer un scénario "Commande EVSE" avec un bloc CODE, dans ce bloc coller le script fourni : [Script PHP Jeedom](./Script%20Jeedom/code_scenario.php)
+5. Remplacer l'adresse IP dans le script par l'adresse de votre module.
+6. Créer une commande dans votre virtuel qui lance ce scénario avec le TAG "courant", mettre la valeur du courant correspondant à ce que vous voulez faire.
+7. Par exemple pour la commande Start, cliquer sur la roue dentée à droite de la commande juste à côté du bouton "Tester"
+8. Sur la fenêtre qui s'ouvre, cliquer sur l'onglet "Configuration" puis ajouter une action après execution, choisir votre scénarion préalablement créé puis saisir le TAG.
+Dans l'exemple, j'ai pris la commande de limite de courant comme paramètre à envoyer au scénario
+
+![Exemple pour la commande Start](./Images/jeedom5.png)
+
+10. Pour la commande Stop, faire de même que la commande Start mais on met le TAG "courant" directement à 0
+
+![Exemple pour la commande Stop](./Images/jeedom6.png)
 
 ## FAQ
 **- Comment stopper la charge du VE ?**
