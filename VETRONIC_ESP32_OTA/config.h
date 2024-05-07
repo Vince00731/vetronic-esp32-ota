@@ -4,7 +4,7 @@
 #include <String.h>
 
 /*************************  Constante ****************************/
-#define VERSION "v2.0"
+#define VERSION "v2.2"
 #define ATTENTE_REQUETE 1
 #define READ_EVSE 2
 #define ENVOI_REQ 3

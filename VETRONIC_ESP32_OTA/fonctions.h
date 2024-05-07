@@ -3,7 +3,7 @@
 //
 // Auteur: Vincent ROBERT
 // vrelectronique@gmail.com
-// Version 2.0 du 26/08/2023
+// Version 2.2 du 07/05/2024
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "config.h"
@@ -56,6 +56,8 @@ void UpdateJeedom(String cmd_id, String valeur)
   {
     if (debug)
       Serial.println("Paramètres Jeedom non configurés");
+
+    httpClient.end();
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +165,14 @@ String Read_Evse(String commande)
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+// Envoi un texte à afficher sur l'écran
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+void Write_Display_Evse(String texte)
+{
+  Read_Evse("$FP " + texte);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 // Retourne les valeurs entre 2 séparateurs
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 String getValue(String data, char separator, int index)
@@ -265,7 +275,7 @@ void UpdateEvseStatus(void)
     reponse_temporaire = reponse_temporaire.substring(Index_Start + 13, Index_Start + 14); // Isole le chiffre qui nous intéresse
     state = reponse_temporaire;
     if (state == "0")
-      state_txt = "Câble deconnecté";
+      state_txt = "Câble déconnecté";
     else if (state == "1")
       state_txt = "Câble connecté";
     else if (state == "2")
@@ -362,7 +372,7 @@ String DoRepXml(String req, String erreur, String reponse)
         reponse_temporaire = reponse_temporaire.substring(Index_Start + 13, Index_Start + 14); // Isole le chiffre qui nous intéresse
         state = reponse_temporaire;
         if (state == "0")
-          state_txt = "Câble deconnecté";
+          state_txt = "Câble déconnecté";
         else if (state == "1")
           state_txt = "Câble connecté";
         else if (state == "2")
@@ -479,7 +489,7 @@ String DoRepXml(String req, String erreur, String reponse)
         reponse_temporaire = reponse_temporaire.substring(Index_Start + 13, Index_Start + 14); // Isole le chiffre qui nous intéresse
         state = reponse_temporaire;
         if (state == "0")
-          state_txt = "Câble deconnecté";
+          state_txt = "Câble déconnecté";
         else if (state == "1")
           state_txt = "Câble connecté";
         else if (state == "2")

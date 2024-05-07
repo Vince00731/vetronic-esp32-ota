@@ -12,7 +12,7 @@
 //
 // Auteur: Vincent ROBERT avec l'aide de Christian Dingean (cdlog2@hotmail.com)
 // vrelectronique@gmail.com
-// Version 1.1 du 19/08/2023
+// Version 2.2 du 07/05/2024
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "config.h"
@@ -21,6 +21,7 @@
 #include <AutoConnect.h>
 #include "pages_web.h"
 #include <WiFiClient.h>
+#include <ESP32Time.h>
 
 /****************  Active les messages de debug  ******************/
 bool debug = false;
@@ -38,6 +39,7 @@ uint8_t step_tcp = ATTENTE_REQUETE;
 unsigned long currentTime = 0;
 unsigned long previousTime = 0;
 unsigned long timer = 0;
+unsigned long timer_display = 0;
 evse_state_t evse_state;
 evse_state_t previous_evse_state;
 const char *fw_ver = VERSION;
@@ -57,6 +59,12 @@ WiFiClient TCPClient;
 // HTTP Client pour envoi de requête
 WiFiClient clientHttp;
 HTTPClient httpClient;
+
+// RTC
+ESP32Time rtc(0);
+const char *ntpServer = "fr.pool.ntp.org";
+struct tm timeinfo;
+int previous_hour = 0;
 
 // Fonctions nécessaires au fonctionnement du programme
 #include "fonctions.h"
@@ -150,12 +158,18 @@ void setup()
   ClearBufferRxCom();
   Serial.println("VETRONIC_ESP32_OTA " + String(VERSION));
 
+  // RTC
+  // On configure le seveur NTP sur la timezone de Paris
+  configTzTime("CET-1CEST-2,M3.5.0/02:00:00,M10.5.0/03:00:00", ntpServer);
+
   // Configuration du portail web AutoConnect
   config.boundaryOffset = CREDENTIAL_OFFSET; // Déplace la sauvergarde des SSID Wifi après les paramètres de EEPROM
   config.ota = AC_OTA_BUILTIN;
   config.otaExtraCaption = fw_ver;
   config.apid = "VETRONIC_ESP32_OTA";    // SSID en mode AP
   config.apip = IPAddress(172, 0, 0, 1); // Adresse IP en mode AP
+  config.autoReconnect = true;           // Reconnection automatique
+  config.menuItems = config.menuItems | AC_MENUITEM_DELETESSID;
   portal.config(config);
 
   // Déclaration des pages Web
@@ -219,6 +233,21 @@ void setup()
 
   // Initilisation du timer de refresh
   timer = millis();
+  timer_display = millis();
+
+  // Mise à jour de l'heure
+  if (getLocalTime(&timeinfo))
+  {
+    if (debug)
+      Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S zone %Z %z ");
+    rtc.setTimeStruct(timeinfo);
+  }
+  else
+  {
+    // Echec d'obtention de l'heure
+    if (debug)
+      Serial.println(&timeinfo, "Echec d'obtention de l'heure");
+  }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -229,6 +258,7 @@ void loop()
   static String str = "";
   static String str_com = "";
   static String str2_com = "";
+  static char str_temp[40];
 
   // En cas de blocage du WiFi, redémarrage du module ESP32
   if (WiFi.status() == WL_IDLE_STATUS)
@@ -237,7 +267,29 @@ void loop()
     delay(1000);
   }
   // Gestion du portail AutoConnect
-  portal.handleClient(); 
+  portal.handleClient();
+
+  // Mise à jour de l'heure par NTP toutes les heures
+  if (previous_hour != rtc.getHour(true))
+  {
+    previous_hour = rtc.getHour(true);
+    if (getLocalTime(&timeinfo))
+    {
+      if (debug)
+      {
+        Serial.println(&timeinfo, "Mise à jour de l'heure");
+        Serial.println(&timeinfo, "%A, %B %d %Y %H:%M:%S zone %Z %z ");
+      }
+      // Mise à jour de l'heure dans la RTC locale
+      rtc.setTimeStruct(timeinfo);
+    }
+    else
+    {
+      // Echec d'obtention de l'heure
+      if (debug)
+        Serial.println(&timeinfo, "Echec d'obtention de l'heure");
+    }
+  }
 
   // Si la fréquence de raffraichissement est trop faible, on corrige à 2sec mini
   if ((params.freq_update_evse < 2000) && (params.freq_update_evse != 0))
@@ -254,6 +306,31 @@ void loop()
     if (step_tcp == ATTENTE_REQUETE)
     {
       step_tcp = UPDATE_EVSE;
+    }
+  }
+
+  // Mise à jour de l'écran de la borne réguliérement (1sec)
+  if ((millis() > timer_display + 1000))
+  {
+    // Si une requête est en cours, on attend le prochain tour de boucle
+    if (step_tcp == ATTENTE_REQUETE)
+    {
+      // Si véhicule en charge
+      if (evse_state.code_status == 2)
+      {
+        sprintf(str_temp, "%dV | %.1f A | %d A", evse_state.tension, (float)((float)evse_state.courant / 1000), evse_state.courant_max / 1000);
+        Write_Display_Evse(String(str_temp));
+      }
+      // Si la borne est connecté mais la borne pas activée
+      else if ((evse_state.courant_max < 6000) && (evse_state.code_status == 1))
+      {
+        Write_Display_Evse(String("Charge indisponible"));
+      }
+      else
+      {
+        Write_Display_Evse(rtc.getTime("%d/%m/%Y %H:%M:%S"));
+      }
+      timer_display = millis();
     }
   }
 
@@ -352,14 +429,28 @@ void loop()
     // Si la tension a changé
     if (evse_state.tension != previous_evse_state.tension)
     {
+      if (evse_state.tension < 5)
+      {
+        UpdateJeedom(String(params.id_tension), "0");
+      }
+      else
+      {
+        UpdateJeedom(String(params.id_tension), String(evse_state.tension));
+      }
       previous_evse_state.tension = evse_state.tension;
-      UpdateJeedom(String(params.id_tension), String(evse_state.tension));
     }
     // Si le courant a changé
     if (evse_state.courant != previous_evse_state.courant)
     {
+      if (evse_state.courant <= 100)
+      {
+        UpdateJeedom(String(params.id_courant), "0");
+      }
+      else
+      {
+        UpdateJeedom(String(params.id_courant), String(evse_state.courant));
+      }
       previous_evse_state.courant = evse_state.courant;
-      UpdateJeedom(String(params.id_courant), String(evse_state.courant));
     }
     // Si le courant max a changé
     if (evse_state.courant_max != previous_evse_state.courant_max)
