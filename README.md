@@ -5,7 +5,9 @@ IC ESP32 OTA
 [![arduino-library-badge](https://www.ardu-badge.com/badge/PageBuilder.svg?)](https://www.ardu-badge.com/PageBuilder)
 [![Arduino Library Manager](https://img.shields.io/static/v1?label=Arduino&message=v6.21.3&logo=arduino&logoColor=white&color=blue)](https://www.ardu-badge.com/ArduinoJson/6.21.3)
 [![arduino-library-badge](https://www.ardu-badge.com/badge/AutoConnect.svg?)](https://www.ardu-badge.com/AutoConnect)
+[![arduino-library-badge](https://www.ardu-badge.com/badge/ESP32Time.svg?)](https://www.ardu-badge.com/ESP32Time)
 [![License](https://img.shields.io/github/license/Vince00731/vetronic-esp32-ota)](https://github.com/Vince00731/vetronic-esp32-ota/blob/master/LICENSE)
+
 
 Permet le contrôle à distance de la borne de recharge [VE-TRONIC WB-01](http://ve-tronic.fr/store/wallbox) par [Jeedom](https://www.jeedom.com) (ou tout autre domotique) via un ESP32.
 
